@@ -41,7 +41,7 @@ trait IndependentTaggable
     public function tag()
     {
         $args = func_get_args();
-        if (count($args) == 1 && is_array($args)) {
+        if (count($args) == 1 && is_array($args[0])) {
             $tags = $args[0];
         } else {
             $tags = $args;
@@ -49,6 +49,20 @@ trait IndependentTaggable
 
         foreach ($tags as $tag) {
             $this->addTag($tag);
+        }
+    }
+
+    public function untag()
+    {
+        $args = func_get_args();
+        if (count($args) == 1 && is_array($args[0])) {
+            $tags = $args[0];
+        } else {
+            $tags = $args;
+        }
+
+        foreach ($tags as $tag) {
+            $this->removeTag($tag);
         }
     }
 
@@ -64,6 +78,14 @@ trait IndependentTaggable
         if (!$this->tags->contains($tag)) {
             $this->tags()->attach($tag->id);
         }
+    }
 
+    public function removeTag($tag_name)
+    {
+        $class = $this->getTagModelName();
+        $tag = $class::where('name', $tag_name)->first();
+        if (!empty($tag) && $this->tags->contains($tag->id)) {
+            $this->tags()->detach($tag->id);
+        }
     }
 }
