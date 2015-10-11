@@ -19,6 +19,13 @@ class CreateDummyClassTagsTable extends Migration
 
             $table->timestamps();
         });
+
+        Schema::create('dummy_table_tag_map', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->integer('parent_id')->unsigned();
+            $table->timestamps();
+        });
     }
 
     /**

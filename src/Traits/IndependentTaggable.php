@@ -17,7 +17,7 @@ trait IndependentTaggable
 
     public function getTagModelNameDefault()
     {
-        return $this->getNamespaceName() . '\\' . config('tagable.suffix', 'TagFor') . $this->getShortName() ;
+        return $this->getNamespaceName() . '\\' . $this->getShortName() . config('tagable.suffix', 'Tag');
     }
 
     public function getShortName()
@@ -34,7 +34,7 @@ trait IndependentTaggable
 
     public function tags()
     {
-        $intermediate_table = $this->intermediate_table ?: Str::snake($this->getShortName()) . '_tags';
+        $intermediate_table = $this->intermediate_table ?: Str::snake($this->getShortName()) . '_tag_map';
         return $this->belongsToMany($this->getTagModelName(), $intermediate_table, 'article_id', 'tag_id');
     }
 
