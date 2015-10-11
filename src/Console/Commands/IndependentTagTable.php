@@ -1,8 +1,9 @@
 <?php
 
-namespace Unisharp\Console\Commands;
+namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Foundation\Composer;
 use Illuminate\Support\Str;
 
 class IndependentTagTable extends Command
@@ -21,13 +22,15 @@ class IndependentTagTable extends Command
      */
     protected $description = 'Create Independent Tag Table';
 
+    protected $composer;
     /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Composer $composer)
     {
+        $this->composer = $composer;
         parent::__construct();
     }
 
@@ -38,7 +41,6 @@ class IndependentTagTable extends Command
      */
     public function handle()
     {
-        //
         $entity_name = $this->argument('name');
         $exploded_name = explode('\\', $entity_name);
         $entity_short_name = $exploded_name[count($exploded_name) - 1];
@@ -55,15 +57,26 @@ class IndependentTagTable extends Command
         );
         app('files')->put($path, $content);
 
-        $tag_entity_name = 'TagFor' . $entity_short_name;
+        $tag_entity_name = $entity_short_name . 'Tag';
         if (count($exploded_name) > 0) {
-            $tag_entity_name = $entity_namespace . '\\TagFor' . $entity_short_name;
+            $tag_entity_name = $entity_namespace . '\\' . $entity_short_name . 'Tag';
         }
 
-        $this->call('make:model', [
-            'name' => $tag_entity_name,
-            '--migration' => 'default'
-        ]);
+        if (!app('files')->exists(app_path(str_replace('\\', '/', $entity_namespace)))) {
+            app('files')->makeDirectory(app_path(str_replace('\\', '/', $entity_namespace)), 0755, true);
+        }
+
+        app('files')->put(
+            app_path(
+                str_replace('\\', '/', $entity_namespace) . '/' . $entity_short_name . 'Tag.php'
+            ),
+            $this->replaceContent(
+                ['DummyClass' => $entity_short_name],
+                app('files')->get(__DIR__ . '/stubs/independentTag.stub')
+            )
+        );
+
+        $this->composer->dumpAutoloads();
     }
 
     public function replaceContent(Array $strings, $content)

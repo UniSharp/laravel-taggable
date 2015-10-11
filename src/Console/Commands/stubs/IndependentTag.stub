@@ -1,0 +1,12 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+use Unisharp\Taggable\Traits\IndependentTag;
+
+class DummyClassTag extends Model
+{
+    use IndependentTag;
+    protected $fillable = ['name'];
+}

@@ -12,7 +12,7 @@ class CreateDummyClassTagsTable extends Migration
      */
     public function up()
     {
-        Schema::create('dummy_table_tags', function (Blueprint $table) {
+        Schema::create('dummy_table_tag_map', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('dummy_table_id')->unsigned();
             $table->integer('tag_id')->unsigned();
@@ -20,7 +20,7 @@ class CreateDummyClassTagsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('dummy_table_tag_map', function (Blueprint $table) {
+        Schema::create('dummy_table_tags', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->integer('parent_id')->unsigned();
@@ -35,6 +35,7 @@ class CreateDummyClassTagsTable extends Migration
      */
     public function down()
     {
+        Schema::drop('dummy_table_tag_map');
         Schema::drop('dummy_table_tags');
     }
 }
