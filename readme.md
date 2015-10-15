@@ -9,11 +9,11 @@ this api can handle tag in independent tables or use only one table
 composer.json:
 
     "require" : {
-        "unisharp/laravel-datacarrier" : "dev-master"
+        "unisharp/laravel-taggable" : "dev-master"
     }, 
     "repositories": {
         "type": "git",
-        "url": "https://github.com/UniSharp/laravel-datacarrier.git
+        "url": "https://github.com/UniSharp/laravel-taggable.git
     }
 
 save it and then 
