@@ -13,7 +13,7 @@ composer.json:
     }, 
     "repositories": {
         "type": "git",
-        "url": "https://github.com/UniSharp/laravel-taggable.git
+        "url": "https://github.com/UniSharp/laravel-taggable.git"
     }
 
 save it and then 
