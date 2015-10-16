@@ -1,8 +1,8 @@
 <?php
 namespace Unisharp\Taggable;
 
-use App\Console\Commands\IndependentTagTable;
 use Illuminate\Support\ServiceProvider;
+use Unisharp\Taggable\Console\Commands\IndependentTagTable;
 
 class TaggableServiceProvider extends ServiceProvider
 {

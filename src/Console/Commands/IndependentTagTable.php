@@ -1,6 +1,5 @@
 <?php
-
-namespace App\Console\Commands;
+namespace Unisharp\Taggable\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Composer;
