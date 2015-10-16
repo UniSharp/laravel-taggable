@@ -12,19 +12,21 @@ class CreateDummyClassTagsTable extends Migration
      */
     public function up()
     {
-        Schema::create('dummy_table_tag_map', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('dummy_table_id')->unsigned();
-            $table->integer('tag_id')->unsigned();
-
-            $table->timestamps();
-        });
-
         Schema::create('dummy_table_tags', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->integer('parent_id')->unsigned();
             $table->timestamps();
+        });
+
+        Schema::create('dummy_table_tag_map', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('dummy_table_id')->unsigned();
+            $table->integer('tag_id')->unsigned();
+            $table->timestamps();
+
+            $table->foreign('tag_id')->references('id')->on('dummy_table_tags')->onDelete('cascade');
+            $table->foreign('dummy_table_id')->references('id')->on('dummy_tables')->onDelete('cascade');
         });
     }
 
