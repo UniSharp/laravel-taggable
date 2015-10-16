@@ -70,7 +70,12 @@ trait IndependentTaggable
     public function addTag($tag_name)
     {
         $class = $this->getTagModelName();
-        $tag = $class::where('name', $tag_name)->first();
+        if (gettype($tag_name) == 'integer') {
+            $tag = $class::find($tag_name);
+        } else {
+            $tag = $class::where('name', $tag_name)->first();
+        }
+
         if (empty($tag)) {
             $tag = $class::create(['name' => $tag_name]);
             $this->tags()->saveMany([$tag]);
@@ -84,7 +89,12 @@ trait IndependentTaggable
     public function removeTag($tag_name)
     {
         $class = $this->getTagModelName();
-        $tag = $class::where('name', $tag_name)->first();
+        if (gettype($tag_name) == 'integer') {
+            $tag = $class::find($tag_name);
+        } else {
+            $tag = $class::where('name', $tag_name)->first();
+        }
+
         if (!empty($tag) && $this->tags->contains($tag->id)) {
             $this->tags()->detach($tag->id);
         }
