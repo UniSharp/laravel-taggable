@@ -37,7 +37,7 @@ trait IndependentTag
 
     public function entities()
     {
-        $entity_model = $this->entity_model ?: substr(get_class(), 0, count(get_class()) - 4);
+        $entity_model = $this->entity_model ?: substr(get_class(), 0, count(get_class()) - strlen('Tag') - 1);
         $entity_reflection = new \ReflectionClass($entity_model);
         $intermediate_table = $this->intermediate_table ?: Str::snake($entity_reflection->getShortName()) . '_tag_map';
         $entity_column = Str::snake($entity_reflection->getShortName());
