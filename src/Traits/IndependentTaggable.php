@@ -35,7 +35,8 @@ trait IndependentTaggable
     public function tags()
     {
         $intermediate_table = $this->intermediate_table ?: Str::snake($this->getShortName()) . '_tag_map';
-        return $this->belongsToMany($this->getTagModelName(), $intermediate_table, 'article_id', 'tag_id');
+        $entity_column = Str::snake($this->getShortName());
+        return $this->belongsToMany($this->getTagModelName(), $intermediate_table, $entity_column . '_id', 'tag_id');
     }
 
     public function tag()

@@ -30,7 +30,7 @@ trait IndependentTag
             $this->parent_id = $parent->id;
             $this->save();
         } else {
-            throw new InvalidArgumentException("only accept int, string or" . get_class($this) . "object");
+            throw new InvalidArgumentException("only accept int, string or" . get_class($this) . " object");
         }
     }
 }
