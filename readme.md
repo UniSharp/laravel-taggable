@@ -78,3 +78,8 @@ Now, add trait for your product model let it be taggable.
 * get your tags
 
         $product->tags // it will return ProductTag back
+        
+* list your entity which belong specified tag
+
+        $tag = ProductTag::find(1);
+        $tag->entities // it will return Products back
