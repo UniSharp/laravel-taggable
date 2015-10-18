@@ -45,7 +45,7 @@ I assume Product model already exists, and you want make this model be taggable.
 and use following command to generate tag table and model for your Product
 
 
-    php artisan taggable:independent_table Product
+    php artisan taggable:independent_tag_table Product
     
 You will see there's ProductTag model under `app/` folder
 

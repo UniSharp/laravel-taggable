@@ -1,0 +1,14 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+use Unisharp\Taggable\Traits\IndependentCategory;
+
+class DummyClassCategory extends Model
+{
+    use IndependentCategory;
+    protected $fillable = ['name'];
+    //
+}
+

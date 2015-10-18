@@ -5,21 +5,21 @@ use Illuminate\Console\Command;
 use Illuminate\Foundation\Composer;
 use Illuminate\Support\Str;
 
-class IndependentTagTable extends Command
+class IndependentCategoryTable extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'taggable:independent_tag_table {name}';
+    protected $signature = 'taggable:independent_category_table {name}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Create Independent Tag Table';
+    protected $description = 'Create Independent Category Table';
 
     protected $composer;
     /**
@@ -46,19 +46,21 @@ class IndependentTagTable extends Command
         unset($exploded_name[count($exploded_name) - 1]);
         $entity_namespace = implode("\\", $exploded_name);
         $path = $this->createMigration(Str::snake($entity_short_name));
-        $content = app('files')->get(__DIR__ . '/stubs/independent_tag_table.stub');
+        $content = app('files')->get(__DIR__ . '/stubs/independent_category_table.stub');
         $content = $this->replaceContent(
             [
                 'DummyClass' => $entity_short_name,
-                'dummy_table' =>  Str::snake($entity_short_name)
+                'dummy_entity' =>  Str::snake($entity_short_name),
+                'dummy_table' =>  Str::plural(Str::snake($entity_short_name)),
             ],
             $content
         );
+
         app('files')->put($path, $content);
 
-        $tag_entity_name = $entity_short_name . 'Tag';
+        $category_entity_name = $entity_short_name . 'Category';
         if (count($exploded_name) > 0) {
-            $tag_entity_name = $entity_namespace . '\\' . $entity_short_name . 'Tag';
+            $category_entity_name = $entity_namespace . '\\' . $entity_short_name . 'Category';
         }
 
         if (!app('files')->exists(app_path(str_replace('\\', '/', $entity_namespace)))) {
@@ -67,15 +69,15 @@ class IndependentTagTable extends Command
 
         app('files')->put(
             app_path(
-                str_replace('\\', '/', $entity_namespace) . '/' . $entity_short_name . 'Tag.php'
+                str_replace('\\', '/', $entity_namespace) . '/' . $entity_short_name . 'Category.php'
             ),
             $this->replaceContent(
                 ['DummyClass' => $entity_short_name],
-                app('files')->get(__DIR__ . '/stubs/independentTag.stub')
+                app('files')->get(__DIR__ . '/stubs/IndependentCategory.stub')
             )
         );
 
-        $this->composer->dumpAutoloads();
+        $this->composer->dumpAutoloads('-o');
     }
 
     public function replaceContent(Array $strings, $content)
@@ -90,7 +92,7 @@ class IndependentTagTable extends Command
     public function createMigration($table_name)
     {
         $path = app()->databasePath() . '/migrations';
-        $name = 'create_' . $table_name . '_tags_table';
+        $name = 'add_categorizable_for_' . $table_name . '_table';
         return app('migration.creator')->create($name, $path);
     }
 }
