@@ -35,7 +35,15 @@ save it and then
 
     eg. if Product is exists, you can use commad to generate ProductTag Model
     
-    
+* IndependentCategorizable: it's can categorize for your model
+
+#### What different between tag and category?
+
+     Tag is a many to many relationship, a taggalble entity can tag many tags,
+     and there're many entities can belong a tag.
+     
+     However, a entity can only belong one category, it's one to one relation, and there're many entities can belong a category.
+     
 ### Generate Independent Tag Table
 
 I assume Product model already exists, and you want make this model be taggable. if you don't have any models, you can use following builtin command to generate it
@@ -83,3 +91,34 @@ Now, add trait for your product model let it be taggable.
 
         $tag = ProductTag::find(1);
         $tag->entities // it will return Products back
+
+
+### Generate Independent Category
+
+Just like independent tag, you can generate independent category migration by command.
+
+    php artisan taggable:independent_category_table Product
+
+it will generate ProductCategory for Product
+
+and you can add category trait for Product just like before.
+
+    use Unisharp\Taggable\Traits\IndependentIndependentCategorizable;
+
+    class Product extends Model
+    {
+        use IndependentCategorizable;
+    }
+
+### Use Independent Category
+
+* categorize your model
+
+     $product = Product::find(1);
+     $product->categorize('free'); // use string
+     $product->categorize(1); // use product_category id
+     
+* list your model's category
+
+     $product->catetory // list its category, it return ProductCategory
+     
