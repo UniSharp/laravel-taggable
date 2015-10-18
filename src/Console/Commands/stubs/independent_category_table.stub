@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDummyClassTagsTable extends Migration
+class CreateDummyClassCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateDummyClassTagsTable extends Migration
      */
     public function up()
     {
-        Schema::create('dummy_table_categories', function (Blueprint $table) {
+        Schema::create('category_table', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->timestamps();
@@ -20,7 +20,7 @@ class CreateDummyClassTagsTable extends Migration
 
         Schema::table('dummy_table', function (Blueprint $table) {
             $table->integer('category_id')->unsigned()->nullable();
-            $table->foreign('category_id')->references('id')->on('dummy_category_table')->onDelete('set null');
+            $table->foreign('category_id')->references('id')->on('category_table')->onDelete('set null');
         });
     }
 

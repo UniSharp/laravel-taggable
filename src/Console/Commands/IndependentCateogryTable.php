@@ -49,9 +49,10 @@ class IndependentCategoryTable extends Command
         $content = app('files')->get(__DIR__ . '/stubs/independent_category_table.stub');
         $content = $this->replaceContent(
             [
-                'DummyClass' => $entity_short_name,
-                'dummy_entity' =>  Str::snake($entity_short_name),
-                'dummy_table' =>  Str::plural(Str::snake($entity_short_name)),
+                'DummyClass'     =>  $entity_short_name,
+                'dummy_entity'   =>  Str::snake($entity_short_name),
+                'dummy_table'    =>  Str::plural(Str::snake($entity_short_name)),
+                'category_table' =>  Str::snake($entity_short_name) . '_categories',
             ],
             $content
         );
@@ -92,7 +93,7 @@ class IndependentCategoryTable extends Command
     public function createMigration($table_name)
     {
         $path = app()->databasePath() . '/migrations';
-        $name = 'add_categorizable_for_' . $table_name . '_table';
+        $name = 'create_' . $table_name . '_categories_table';
         return app('migration.creator')->create($name, $path);
     }
 }
