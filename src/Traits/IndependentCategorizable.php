@@ -36,6 +36,12 @@ trait IndependentCategorizable
         $this->save();
     }
 
+    public function decategorize()
+    {
+        $this->category_id = null;
+        $this->save();
+    }
+
     public function findOrNewCategoryByName($name)
     {
         $reflect = new \ReflectionClass($this);
