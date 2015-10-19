@@ -114,11 +114,15 @@ and you can add category trait for Product just like before.
 
 * categorize your model
 
-     $product = Product::find(1);
-     $product->categorize('free'); // use string
-     $product->categorize(1); // use product_category id
+         $product = Product::find(1);
+         $product->categorize('free'); // use string
+         $product->categorize(1); // use product_category id
      
+* decategorize
+
+        $product->decategorize();
+
 * list your model's category
 
-     $product->catetory // list its category, it return ProductCategory
-     
+         $product->catetory // list its category, it return ProductCategory
+    
