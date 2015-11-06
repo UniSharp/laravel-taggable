@@ -16,6 +16,19 @@ trait IndependentTag
     {
         return $this->hasMany(get_class($this), 'parent_id', 'id');
     }
+    public function hasSubs()
+    {
+        return $this->subs->count() > 0;
+    }
+
+    public function hasParent()
+    {
+        if ($this->parent_id === 0 || is_null($this->parent)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
     public function addParent($parent)
     {
