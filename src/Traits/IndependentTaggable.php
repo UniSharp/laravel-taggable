@@ -67,6 +67,22 @@ trait IndependentTaggable
         }
     }
 
+    public function retag()
+    {
+        $args = func_get_args();
+        if (count($args) == 1 && is_array($args[0])) {
+            $tags = $args[0];
+        } else {
+            $tags = $args;
+        }
+
+        $tag_ids = array_map(function ($tag) {
+            return $this->getTagIds($tag);
+        }, $tags);
+
+        $this->tags()->sync($tag_ids);
+    }
+
     public function addTag($tag_name)
     {
         $class = $this->getTagModelName();
@@ -98,5 +114,17 @@ trait IndependentTaggable
         if (!empty($tag) && $this->tags->contains($tag->id)) {
             $this->tags()->detach($tag->id);
         }
+    }
+
+    public function getTagIds($tag_name)
+    {
+        $class = $this->getTagModelName();
+        if (gettype($tag_name) == 'integer') {
+            $tag = $class::find($tag_name);
+        } else {
+            $tag = $class::where('name', $tag_name)->first();
+        }
+
+        return $tag->id;
     }
 }
