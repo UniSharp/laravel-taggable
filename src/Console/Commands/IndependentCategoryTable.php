@@ -2,7 +2,7 @@
 namespace Unisharp\Taggable\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Composer;
+use Illuminate\Foundation\Composer;
 use Illuminate\Support\Str;
 
 class IndependentCategoryTable extends Command
