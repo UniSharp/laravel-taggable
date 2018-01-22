@@ -78,7 +78,7 @@ class IndependentTagTable extends Command
         $this->composer->dumpAutoloads();
     }
 
-    public function replaceContent(Array $strings, $content)
+    public function replaceContent(array $strings, $content)
     {
         foreach ($strings as $key => $string) {
             $content = str_replace($key, $string, $content);

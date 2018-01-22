@@ -54,6 +54,6 @@ trait IndependentTag
         $entity_reflection = new \ReflectionClass($entity_model);
         $intermediate_table = $this->intermediate_table ?: Str::snake($entity_reflection->getShortName()) . '_tag_map';
         $entity_column = Str::snake($entity_reflection->getShortName());
-        return $this->belongsToMany($entity_model, $intermediate_table,'tag_id',  $entity_column . '_id');
+        return $this->belongsToMany($entity_model, $intermediate_table, 'tag_id', $entity_column . '_id');
     }
 }
